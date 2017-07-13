@@ -1,0 +1,21 @@
+server:
+  type: simple
+  applicationContextPath: /poker
+  connector:
+    type: http
+    port: 8080
+
+logging:
+  level: INFO
+  loggers:
+    com.etermax.kotlin.poker: DEBUG
+  appenders:
+      - type: console
+      - type: file
+        threshold: DEBUG
+        logFormat: "%-6level [%d{HH:mm:ss.SSS}] [%t] %logger{5} - %X{code} %msg %n"
+        currentLogFilename: poker.log
+        archivedLogFilenamePattern: poker-%d{yyyy-MM-dd}-%i.log.gz
+        archivedFileCount: 3
+        timeZone: UTC
+        maxFileSize: 1MB
