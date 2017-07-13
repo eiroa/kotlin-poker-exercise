@@ -16,8 +16,10 @@ In the card game poker, a hand consists of five cards and are ranked, from lowes
 The cards are valued in the order:  
 2, 3, 4, 5, 6, 7, 8, 9, 10, Jack, Queen, King, Ace.
 
-and each card have a value in points of:
+and, in the context of this exercise, additionally each card have a value in points of:
 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14.
+
+Players win hands based in card's ranks and not in card's points.
 
 If two players have the same ranked hands then the rank made up of the highest value wins; for example, a pair of eights beats a pair of fives (see example 1 below). But if two ranks tie, for example, both players have a pair of queens, then highest cards in each hand are compared (see example 4 below); if the highest cards tie then the next highest cards are compared, and so on.
 
@@ -42,7 +44,11 @@ Consider the following five hands dealt to two players:
 |      |   | Full House        |   | Full House          |   |          |
 |      |   | With Three Fours  |   | with Three Threes   |   |          |
 
-The file poker.txt contains one-thousand random hands dealt to two players. Each line of the file contains ten cards (separated by a single space): the first five are Player 1's cards and the last five are Player 2's cards. You can assume that all hands are valid (no invalid characters or repeated cards), each player's hand is in no specific order, and in each hand there is a clear winner.
+The file resources/poker.txt contains one-thousand random hands dealt to two players.
+Each line of the file contains ten cards (separated by a single space):
+the first five are Player 1's cards and the last five are Player 2's cards.
+You can assume that all hands are valid (no invalid characters or repeated cards),
+each player's hand is in no specific order, and in each hand there is a clear winner.
 
 Please, respond
 *   How many hands does Player 1 win?
@@ -52,7 +58,7 @@ Please, respond
 
 All this data will be accesible using a rest API serving JSON
 
-Each API resource can calculate his result one time at most, but use of a cache is forbidden
+Each API resource can calculate his result one time at most, but use of a inproc cache is forbidden
 
 Use TDD and apply all S.O.L.I.D. principles
 
