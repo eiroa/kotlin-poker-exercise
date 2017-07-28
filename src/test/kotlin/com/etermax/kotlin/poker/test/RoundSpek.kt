@@ -17,9 +17,9 @@ import org.jetbrains.spek.api.dsl.on
  */
 class RoundSpek : Spek({
     describe("a Game") {
-        given("Two hands") {
+        given("poker vs higHand") {
             //Poker
-            val playerAHand = Hand(listOf(Card(ACE, CLUBS), Card(ACE, DIAMONDS), Card(ACE, HEARTS), Card(ACE, SPADES), Card(ACE, CLUBS)))
+            val playerAHand = Hand(listOf(Card(ACE, CLUBS), Card(ACE, DIAMONDS), Card(ACE, HEARTS), Card(ACE, SPADES), Card(QUEEN, CLUBS)))
             //HighHand
             val playerBHand = Hand(listOf(Card(ACE, CLUBS), Card(THREE, CLUBS), Card(FOUR, CLUBS), Card(FIVE, CLUBS), Card(SIX, CLUBS)))
             on("play a game") {
@@ -29,10 +29,23 @@ class RoundSpek : Spek({
                 }
             }
         }
+
+        given("full house vs poker") {
+            //full house
+            val playerAHand = Hand(listOf(Card(ACE, CLUBS), Card(ACE, DIAMONDS), Card(ACE, HEARTS), Card(QUEEN, SPADES), Card(QUEEN, CLUBS)))
+            //Poker
+            val playerBHand = Hand(listOf(Card(ACE, CLUBS), Card(ACE, DIAMONDS), Card(ACE, HEARTS), Card(ACE, SPADES), Card(QUEEN, CLUBS)))
+            on("play a game") {
+                val playerAWon = hasPlayerAWon(playerAHand, playerBHand)
+                it("player one wins") {
+                    playerAWon shouldBe false
+                }
+            }
+        }
     }
 })
 
 
 fun hasPlayerAWon(playerAHand: Hand, playerBHand: Hand): Boolean {
-    return playerAHand.beats(playerBHand)
+    return playerAHand.rankedHand.isGraterThan(playerBHand.rankedHand)
 }

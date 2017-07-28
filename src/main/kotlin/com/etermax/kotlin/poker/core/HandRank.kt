@@ -10,5 +10,9 @@ enum class HandRank {
     FULL_HOUSE,
     FOUR_OF_A_KIND,
     STRAIGHT_FLUSH,
-    ROYAL_FLUSH
+    ROYAL_FLUSH;
+
+    fun isGreaterThan(handRank: HandRank): Boolean {
+        return this.ordinal > handRank.ordinal
+    }
 }

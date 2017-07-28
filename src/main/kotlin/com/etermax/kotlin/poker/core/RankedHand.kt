@@ -35,8 +35,7 @@ class RankedHand(hand: Hand) {
     }
 
     fun isGraterThan(rankedHand: RankedHand): Boolean {
-        //TODO: implementar
-        return true
+        return rank.isGreaterThan(rankedHand.rank)
     }
 
     private fun isStraight(hand: Hand): Boolean {

@@ -7,4 +7,5 @@ import org.jetbrains.spek.api.Spek
  */
 class HandSpek : Spek({
 
+    //TODO: habría que probar el caso de que un hand reciva cartas incalidas, por ejemplo 5 iguales.
 })
