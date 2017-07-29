@@ -37,7 +37,7 @@ class RoundSpek : Spek({
             val playerBHand = Hand(listOf(Card(ACE, CLUBS), Card(ACE, DIAMONDS), Card(ACE, HEARTS), Card(ACE, SPADES), Card(QUEEN, CLUBS)))
             on("play a game") {
                 val playerAWon = hasPlayerAWon(playerAHand, playerBHand)
-                it("player one wins") {
+                it("player one lose") {
                     playerAWon shouldBe false
                 }
             }
