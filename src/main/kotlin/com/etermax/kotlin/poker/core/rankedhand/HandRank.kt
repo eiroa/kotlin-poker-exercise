@@ -1,4 +1,4 @@
-package com.etermax.kotlin.poker.core
+package com.etermax.kotlin.poker.core.rankedhand
 
 enum class HandRank {
     HIGH_CARD,

@@ -1,6 +1,6 @@
 package com.etermax.kotlin.poker.test
 
-import com.etermax.kotlin.poker.core.HandRank
+import com.etermax.kotlin.poker.core.rankedhand.HandRank
 import org.amshove.kluent.shouldBe
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.describe

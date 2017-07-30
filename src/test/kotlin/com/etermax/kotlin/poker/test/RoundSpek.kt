@@ -4,6 +4,7 @@ import com.etermax.kotlin.poker.core.Card
 import com.etermax.kotlin.poker.core.CardRank.*
 import com.etermax.kotlin.poker.core.Hand
 import com.etermax.kotlin.poker.core.Suit.*
+import com.etermax.kotlin.poker.core.rankedhand.RankedHand
 import org.amshove.kluent.shouldBe
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.describe
@@ -47,5 +48,5 @@ class RoundSpek : Spek({
 
 
 fun hasPlayerAWon(playerAHand: Hand, playerBHand: Hand): Boolean {
-    return playerAHand.rankedHand.isGraterThan(playerBHand.rankedHand)
+    return RankedHand.create(playerAHand).isGraterThan(RankedHand.create(playerBHand))
 }
