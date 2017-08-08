@@ -53,20 +53,20 @@ class PokerParserSpek: Spek({
             val cardString = "JH"
             on("parsing string card") {
                 val card = Card(cardString)
-                it("should return a clovers ace card") {
+                it("should return a hearts Jack card") {
                     card.type shouldEqual CardType.HEARTS
                     card.value shouldEqual 11
                 }
             }
         }
 
-        given(" a hearts Jack string representation") {
-            val cardString = "JH"
+        given(" a hearts 10 string representation") {
+            val cardString = "TH"
             on("parsing string card") {
                 val card = Card(cardString)
-                it("should return a clovers ace card") {
+                it("should return a hearts 10 card") {
                     card.type shouldEqual CardType.HEARTS
-                    card.value shouldEqual 11
+                    card.value shouldEqual 10
                 }
             }
         }
