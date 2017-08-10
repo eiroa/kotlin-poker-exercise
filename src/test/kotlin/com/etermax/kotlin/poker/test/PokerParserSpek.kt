@@ -1,7 +1,7 @@
-
 package com.etermax.kotlin.poker.test
 
 import com.etermax.kotlin.poker.rest.representation.Card
+import com.etermax.kotlin.poker.rest.representation.CardParser
 import com.etermax.kotlin.poker.rest.representation.CardType
 import org.amshove.kluent.`should equal to`
 import org.amshove.kluent.shouldEqual
@@ -14,7 +14,7 @@ import org.jetbrains.spek.api.dsl.on
 /**
  * Created by eiroa on 8/8/17.
  */
-class PokerParserSpek: Spek({
+class PokerParserSpek : Spek({
     describe("Validate individual cards") {
         given(" a diamonds 2 card string representation") {
             val cardString = "2D"
@@ -82,14 +82,13 @@ class PokerParserSpek: Spek({
                     handsList.size shouldEqual 1000
                 }
                 it("should validate 10 cards for the round 3") {
-                    val cards: MutableList<Card> = mutableListOf()
 
-                    var cardsToParse = handsList.get(2).replace("\\s".toRegex(),"")
+                    var cardsToParse = handsList.get(2).replace("\\s".toRegex(), "")
 
-                    while (cardsToParse.isNotEmpty()){
-                        cards.add(Card(cardsToParse.take(2)))
-                        cardsToParse = cardsToParse.drop(2)
-                    }
+                    val stringCardsList = CardParser.stringToListOfPairStrings(cardsToParse)
+
+                    val cards = CardParser.listOfCardsRepresentationToListOfCards(stringCardsList)
+
                     cards.size shouldEqual 10
                 }
             }
