@@ -19,16 +19,10 @@ object CardParser {
         return CardType.map.get(value)!!
     }
 
-    fun listOfCardsRepresentationToListOfCards(strings: List<String>): MutableList<Card> {
-        val cardsResult = mutableListOf<Card>()
-        strings.forEach { value -> cardsResult.add(Card(value)) }
-        return cardsResult
-    }
-
-    fun stringToListOfPairStrings(values: String): List<String> {
+    fun stringToListOfCards(values: String): List<Card> {
         when (values) {
-            "" -> return emptyList<String>()
-            else -> return listOf(values.take(1) + values.take(2).drop(1)) + stringToListOfPairStrings(values.drop(2))
+            "" -> return emptyList<Card>()
+            else -> return listOf( Card(values.take(1) + values.take(2).drop(1))) + stringToListOfCards(values.drop(2))
         }
     }
 
