@@ -1,8 +1,6 @@
 package com.etermax.kotlin.poker.rest.representation
 
-/**
- * Created by eiroa on 8/8/17.
- */
+
 class Card {
     val representation:String
     var type : CardType
