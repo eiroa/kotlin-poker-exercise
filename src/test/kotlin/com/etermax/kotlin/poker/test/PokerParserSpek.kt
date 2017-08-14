@@ -1,8 +1,8 @@
 package com.etermax.kotlin.poker.test
 
-import com.etermax.kotlin.poker.rest.representation.Card
-import com.etermax.kotlin.poker.rest.representation.CardParser
-import com.etermax.kotlin.poker.rest.representation.CardType
+import com.etermax.kotlin.poker.domain.Card
+import com.etermax.kotlin.poker.domain.CardParser
+import com.etermax.kotlin.poker.domain.CardType
 import org.amshove.kluent.shouldEqual
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.describe

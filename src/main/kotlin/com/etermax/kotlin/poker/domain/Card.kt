@@ -1,4 +1,4 @@
-package com.etermax.kotlin.poker.rest.representation
+package com.etermax.kotlin.poker.domain
 
 
 class Card {
