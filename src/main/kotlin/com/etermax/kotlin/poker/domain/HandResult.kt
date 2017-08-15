@@ -5,7 +5,7 @@ enum class HandResult() {
     ROYAL_FLUSH, STRAIGHT_FLUSH, POKER, FULL, FLUSH, STRAIGHT, THREE_OF_A_KIND, TWO_PAIRS, ONE_PAIR, HIGHEST_CARD;
 
     /**
-     * All operations require ordered cards by value and valid hands
+     * All operations should operate with previously ordered cards by value representing a valid Hand
      */
     companion object Representation {
         val resultValues: HashMap<Int, HandResult> = hashMapOf(10 to ROYAL_FLUSH, 9 to STRAIGHT_FLUSH, 8 to POKER, 7 to FULL, 6 to FLUSH, 5 to
@@ -51,7 +51,7 @@ enum class HandResult() {
             return equalCombination(cards,3,3)
         }
 
-        fun isTwoPair(cards: List<Card>):Boolean{
+        fun isTwoPairs(cards: List<Card>):Boolean{
             return equalCombination(cards,3,2)
         }
 

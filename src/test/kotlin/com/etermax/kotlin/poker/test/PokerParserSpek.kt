@@ -8,9 +8,7 @@ import org.jetbrains.spek.api.dsl.given
 import org.jetbrains.spek.api.dsl.it
 import org.jetbrains.spek.api.dsl.on
 
-/**
- * Created by eiroa on 8/8/17.
- */
+
 class PokerParserSpek : Spek({
     describe("Validate individual cards") {
         given(" a diamonds 2 card string representation") {
@@ -93,48 +91,112 @@ class PokerParserSpek : Spek({
                 val p1Hand = Hand(cards.take(5),Player.P1)
                 val p2Hand = Hand(cards.takeLast(5),Player.P2)
                 val round = Round(p1Hand,p2Hand)
-                it("should  validate that Hand for p1 are all of the same type") {
-                    HandResult.areSameType(round.player1Hand.cards) shouldEqual true
-                }
-                it("should  validate that Hand for p1 is straight") {
-                    HandResult.isStraight(round.player1Hand.cards) shouldEqual true
-                }
 
                 it("should  validate that Hand for p1 is royal flush") {
-                    HandResult.isRoyalFlush(round.player1Hand.cards) shouldEqual true
+                    p1Hand.result shouldEqual HandResult.ROYAL_FLUSH
                 }
 
-                it("should  validate that Hand for p2 are not all of the same type") {
-                    HandResult.areSameType(round.player2Hand.cards) shouldEqual false
-                }
-
-                it("should  validate that Hand for p2 is not straight") {
-                    HandResult.isStraight(round.player2Hand.cards) shouldEqual  false
-                }
-                it("should  validate that Hand for p1 isnot  royal flush") {
-                    HandResult.isRoyalFlush(round.player2Hand.cards) shouldEqual false
+                it("should  validate that Hand for p1 is not  royal flush") {
+                    HandResult.isRoyalFlush(p2Hand.cards) shouldEqual false
                 }
             }
         }
 
-        given(" a text with 2 hand representation where players1 is poker") {
+        given(" a text with a hand representation which is straight flush") {
+            val cardsText = "3H4H5H6H7H"
+            on("parsing cards") {
+                val cards = CardParser.stringToListOfCards(cardsText)
+                val p1Hand = Hand(cards,Player.P1)
+                it("should  validate that Hand for p1 is poker") {
+                    p1Hand.result  shouldEqual HandResult.STRAIGHT_FLUSH
+                }
+            }
+        }
+
+        given(" a text with a hand representation which is poker") {
             val cardsText = "3H3C3S3DAH"
             on("parsing cards") {
                 val cards = CardParser.stringToListOfCards(cardsText)
                 val p1Hand = Hand(cards,Player.P1)
                 it("should  validate that Hand for p1 is poker") {
-                    HandResult.isPoker(p1Hand.cards) shouldEqual true
+                    p1Hand.result  shouldEqual HandResult.POKER
                 }
             }
         }
 
-        given(" a text with 2 hand representation where players1 is full") {
+        given(" a text with a hand representation which is  full") {
             val cardsText = "3H3C3S4D4H"
             on("parsing cards") {
                 val cards = CardParser.stringToListOfCards(cardsText)
                 val p1Hand = Hand(cards,Player.P1)
-                it("should  validate that Hand for p1 is poker") {
-                    HandResult.isFull(p1Hand.cards) shouldEqual true
+                it("should  validate that Hand for p1 is full") {
+                    p1Hand.result  shouldEqual HandResult.FULL
+                }
+            }
+        }
+
+        given(" a text with a hand representation which is flush") {
+            val cardsText = "3H4HAH8HJH"
+            on("parsing cards") {
+                val cards = CardParser.stringToListOfCards(cardsText)
+                val p1Hand = Hand(cards,Player.P1)
+                it("should  validate that Hand for p1 is full") {
+                    p1Hand.result  shouldEqual HandResult.FLUSH
+                }
+            }
+        }
+
+        given(" a text with a hand representation which is flush") {
+            val cardsText = "3H4D5H6D7S"
+            on("parsing cards") {
+                val cards = CardParser.stringToListOfCards(cardsText)
+                val p1Hand = Hand(cards,Player.P1)
+                it("should  validate that Hand for p1 is full") {
+                    p1Hand.result  shouldEqual HandResult.STRAIGHT
+                }
+            }
+        }
+
+        given(" a text with a hand representation which is  three of a kind") {
+            val cardsText = "3H3C3S4D2H"
+            on("parsing cards") {
+                val cards = CardParser.stringToListOfCards(cardsText)
+                val p1Hand = Hand(cards,Player.P1)
+                it("should  validate that Hand for p1 is three of a kind") {
+                    p1Hand.result  shouldEqual HandResult.THREE_OF_A_KIND
+                }
+            }
+        }
+
+        given(" a text with a hand representation which is  two pairs") {
+            val cardsText = "3H3C8S4D4H"
+            on("parsing cards") {
+                val cards = CardParser.stringToListOfCards(cardsText)
+                val p1Hand = Hand(cards,Player.P1)
+                it("should  validate that Hand for p1 is two pairs") {
+                    p1Hand.result  shouldEqual HandResult.TWO_PAIRS
+                }
+            }
+        }
+
+        given(" a text with a hand representation which is  one pair") {
+            val cardsText = "3H3C8S2DAH"
+            on("parsing cards") {
+                val cards = CardParser.stringToListOfCards(cardsText)
+                val p1Hand = Hand(cards,Player.P1)
+                it("should  validate that Hand for p1 is one pair") {
+                    p1Hand.result shouldEqual HandResult.ONE_PAIR
+                }
+            }
+        }
+
+        given(" a text with a hand representation which is just HighestCard") {
+            val cardsText = "3H6C8S9DKH"
+            on("parsing cards") {
+                val cards = CardParser.stringToListOfCards(cardsText)
+                val p1Hand = Hand(cards,Player.P1)
+                it("should  validate that Hand for p1 is just highest card") {
+                    p1Hand.result shouldEqual HandResult.HIGHEST_CARD
                 }
             }
         }
