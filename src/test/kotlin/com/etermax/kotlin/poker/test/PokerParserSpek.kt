@@ -1,8 +1,6 @@
 package com.etermax.kotlin.poker.test
 
-import com.etermax.kotlin.poker.domain.Card
-import com.etermax.kotlin.poker.domain.CardParser
-import com.etermax.kotlin.poker.domain.CardType
+import com.etermax.kotlin.poker.domain.*
 import org.amshove.kluent.shouldEqual
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.describe
@@ -87,6 +85,60 @@ class PokerParserSpek : Spek({
                 }
             }
         }
+
+        given(" a text with 2 hand representation where players1 is a royal flush but not players2") {
+            val cardsText = "THJHQHKHAH7SKSKC6H2C"
+            on("parsing cards") {
+                val cards = CardParser.stringToListOfCards(cardsText)
+                val p1Hand = Hand(cards.take(5),Player.P1)
+                val p2Hand = Hand(cards.takeLast(5),Player.P2)
+                val round = Round(p1Hand,p2Hand)
+                it("should  validate that Hand for p1 are all of the same type") {
+                    HandResult.areSameType(round.player1Hand.cards) shouldEqual true
+                }
+                it("should  validate that Hand for p1 is straight") {
+                    HandResult.isStraight(round.player1Hand.cards) shouldEqual true
+                }
+
+                it("should  validate that Hand for p1 is royal flush") {
+                    HandResult.isRoyalFlush(round.player1Hand.cards) shouldEqual true
+                }
+
+                it("should  validate that Hand for p2 are not all of the same type") {
+                    HandResult.areSameType(round.player2Hand.cards) shouldEqual false
+                }
+
+                it("should  validate that Hand for p2 is not straight") {
+                    HandResult.isStraight(round.player2Hand.cards) shouldEqual  false
+                }
+                it("should  validate that Hand for p1 isnot  royal flush") {
+                    HandResult.isRoyalFlush(round.player2Hand.cards) shouldEqual false
+                }
+            }
+        }
+
+        given(" a text with 2 hand representation where players1 is poker") {
+            val cardsText = "3H3C3S3DAH"
+            on("parsing cards") {
+                val cards = CardParser.stringToListOfCards(cardsText)
+                val p1Hand = Hand(cards,Player.P1)
+                it("should  validate that Hand for p1 is poker") {
+                    HandResult.isPoker(p1Hand.cards) shouldEqual true
+                }
+            }
+        }
+
+        given(" a text with 2 hand representation where players1 is full") {
+            val cardsText = "3H3C3S4D4H"
+            on("parsing cards") {
+                val cards = CardParser.stringToListOfCards(cardsText)
+                val p1Hand = Hand(cards,Player.P1)
+                it("should  validate that Hand for p1 is poker") {
+                    HandResult.isFull(p1Hand.cards) shouldEqual true
+                }
+            }
+        }
     }
+
 
 })
