@@ -12,4 +12,6 @@ class Card {
         this.type = CardParser.parseType(representation.takeLast(1))
     }
 
+    override fun toString(): String = value.toString() + type
+
 }
