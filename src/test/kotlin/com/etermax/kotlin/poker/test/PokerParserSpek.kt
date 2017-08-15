@@ -85,7 +85,7 @@ class PokerParserSpek : Spek({
         }
 
         given(" a text with 2 hand representation where players1 is a royal flush but not players2") {
-            val cardsText = "THJHQHKHAH7SKSKC6H2C"
+            val cardsText = "JHTHAHKHQH7SKSKC6H2C"
             on("parsing cards") {
                 val cards = CardParser.stringToListOfCards(cardsText)
                 val p1Hand = Hand(cards.take(5),Player.P1)
@@ -93,7 +93,8 @@ class PokerParserSpek : Spek({
                 val round = Round(p1Hand,p2Hand)
 
                 it("should  validate that Hand for p1 is royal flush") {
-                    p1Hand.result shouldEqual HandResult.ROYAL_FLUSH
+                    p1Hand.result.first shouldEqual HandResult.ROYAL_FLUSH
+                    p1Hand.result.second.size shouldEqual 5
                 }
 
                 it("should  validate that Hand for p1 is not  royal flush") {
@@ -108,7 +109,8 @@ class PokerParserSpek : Spek({
                 val cards = CardParser.stringToListOfCards(cardsText)
                 val p1Hand = Hand(cards,Player.P1)
                 it("should  validate that Hand for p1 is poker") {
-                    p1Hand.result  shouldEqual HandResult.STRAIGHT_FLUSH
+                    p1Hand.result.first  shouldEqual HandResult.STRAIGHT_FLUSH
+                    p1Hand.result.second.size shouldEqual 5
                 }
             }
         }
@@ -119,7 +121,8 @@ class PokerParserSpek : Spek({
                 val cards = CardParser.stringToListOfCards(cardsText)
                 val p1Hand = Hand(cards,Player.P1)
                 it("should  validate that Hand for p1 is poker") {
-                    p1Hand.result  shouldEqual HandResult.POKER
+                    p1Hand.result.first  shouldEqual HandResult.POKER
+                    p1Hand.result.second.size shouldEqual 4
                 }
             }
         }
@@ -130,7 +133,8 @@ class PokerParserSpek : Spek({
                 val cards = CardParser.stringToListOfCards(cardsText)
                 val p1Hand = Hand(cards,Player.P1)
                 it("should  validate that Hand for p1 is full") {
-                    p1Hand.result  shouldEqual HandResult.FULL
+                    p1Hand.result.first  shouldEqual HandResult.FULL
+                    p1Hand.result.second.size shouldEqual 5
                 }
             }
         }
@@ -141,7 +145,8 @@ class PokerParserSpek : Spek({
                 val cards = CardParser.stringToListOfCards(cardsText)
                 val p1Hand = Hand(cards,Player.P1)
                 it("should  validate that Hand for p1 is full") {
-                    p1Hand.result  shouldEqual HandResult.FLUSH
+                    p1Hand.result.first  shouldEqual HandResult.FLUSH
+                    p1Hand.result.second.size shouldEqual 5
                 }
             }
         }
@@ -152,7 +157,8 @@ class PokerParserSpek : Spek({
                 val cards = CardParser.stringToListOfCards(cardsText)
                 val p1Hand = Hand(cards,Player.P1)
                 it("should  validate that Hand for p1 is full") {
-                    p1Hand.result  shouldEqual HandResult.STRAIGHT
+                    p1Hand.result.first  shouldEqual HandResult.STRAIGHT
+                    p1Hand.result.second.size shouldEqual 5
                 }
             }
         }
@@ -163,7 +169,8 @@ class PokerParserSpek : Spek({
                 val cards = CardParser.stringToListOfCards(cardsText)
                 val p1Hand = Hand(cards,Player.P1)
                 it("should  validate that Hand for p1 is three of a kind") {
-                    p1Hand.result  shouldEqual HandResult.THREE_OF_A_KIND
+                    p1Hand.result.first  shouldEqual HandResult.THREE_OF_A_KIND
+                    p1Hand.result.second.size shouldEqual 3
                 }
             }
         }
@@ -174,7 +181,8 @@ class PokerParserSpek : Spek({
                 val cards = CardParser.stringToListOfCards(cardsText)
                 val p1Hand = Hand(cards,Player.P1)
                 it("should  validate that Hand for p1 is two pairs") {
-                    p1Hand.result  shouldEqual HandResult.TWO_PAIRS
+                    p1Hand.result.first  shouldEqual HandResult.TWO_PAIRS
+                    p1Hand.result.second.size shouldEqual 4
                 }
             }
         }
@@ -185,7 +193,8 @@ class PokerParserSpek : Spek({
                 val cards = CardParser.stringToListOfCards(cardsText)
                 val p1Hand = Hand(cards,Player.P1)
                 it("should  validate that Hand for p1 is one pair") {
-                    p1Hand.result shouldEqual HandResult.ONE_PAIR
+                    p1Hand.result.first shouldEqual HandResult.ONE_PAIR
+                    p1Hand.result.second.size shouldEqual 2
                 }
             }
         }
@@ -196,8 +205,31 @@ class PokerParserSpek : Spek({
                 val cards = CardParser.stringToListOfCards(cardsText)
                 val p1Hand = Hand(cards,Player.P1)
                 it("should  validate that Hand for p1 is just highest card") {
-                    p1Hand.result shouldEqual HandResult.HIGHEST_CARD
+                    p1Hand.result.first shouldEqual HandResult.HIGHEST_CARD
+                    p1Hand.result.second.size shouldEqual 1
                 }
+            }
+        }
+    }
+
+
+
+
+
+    describe("Validate Round results") {
+
+        given(" a text with 2 hand representation where players1 is a royal flush but not players2") {
+            val cardsText = "THJHQHKHAH7SKSKC6H2C"
+            on("parsing cards") {
+                val cards = CardParser.stringToListOfCards(cardsText)
+                val p1Hand = Hand(cards.take(5),Player.P1)
+                val p2Hand = Hand(cards.takeLast(5),Player.P2)
+                val round = Round(p1Hand,p2Hand)
+
+                it("should  validate that p1 is winner") {
+                    round.determineWinner() shouldEqual Player.P1
+                }
+
             }
         }
     }
