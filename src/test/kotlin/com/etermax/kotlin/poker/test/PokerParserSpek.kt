@@ -151,7 +151,7 @@ class PokerParserSpek : Spek({
             }
         }
 
-        given(" a text with a hand representation which is flush") {
+        given(" a text with a hand representation which is straight") {
             val cardsText = "3H4D5H6D7S"
             on("parsing cards") {
                 val cards = CardParser.stringToListOfCards(cardsText)
@@ -220,6 +220,36 @@ class PokerParserSpek : Spek({
 
         given(" a text with 2 hand representation where players1 is a royal flush but not players2") {
             val cardsText = "THJHQHKHAH7SKSKC6H2C"
+            on("parsing cards") {
+                val cards = CardParser.stringToListOfCards(cardsText)
+                val p1Hand = Hand(cards.take(5),Player.P1)
+                val p2Hand = Hand(cards.takeLast(5),Player.P2)
+                val round = Round(p1Hand,p2Hand)
+
+                it("should  validate that p1 is winner") {
+                    round.determineWinner() shouldEqual Player.P1
+                }
+
+            }
+        }
+
+        given(" a text with 2 hand representation where both hands are poker, yet p2 hand is a better poker hand") {
+            val cardsText = "8H8H8HKH8HJSJHJD6HJC"
+            on("parsing cards") {
+                val cards = CardParser.stringToListOfCards(cardsText)
+                val p1Hand = Hand(cards.take(5),Player.P1)
+                val p2Hand = Hand(cards.takeLast(5),Player.P2)
+                val round = Round(p1Hand,p2Hand)
+
+                it("should  validate that p2 is winner") {
+                    round.determineWinner() shouldEqual Player.P2
+                }
+
+            }
+        }
+
+        given(" a text with 2 hand representation where both hands are Three of a kind, yet p1 hand has better uncombined highest card ") {
+            val cardsText = "8H8H8HKC2DJS8C7D8C8C"
             on("parsing cards") {
                 val cards = CardParser.stringToListOfCards(cardsText)
                 val p1Hand = Hand(cards.take(5),Player.P1)
