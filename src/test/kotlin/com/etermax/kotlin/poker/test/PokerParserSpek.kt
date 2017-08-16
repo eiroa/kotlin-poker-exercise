@@ -68,18 +68,15 @@ class PokerParserSpek : Spek({
     }
 
     describe("Validate hand representation") {
-        given(" a text with 1000 hands for 2 players") {
+        given(" a text with 1000 rounds for 2 players") {
             val textFile = "poker.txt"
             on("parsing file") {
-                val handsList = Thread.currentThread().contextClassLoader.getResourceAsStream("poker.txt").reader().readLines()
-                it("should  validate 1000 hands") {
-                    handsList.size shouldEqual 1000
+                val game = GameReferee(textFile)
+                it("should  validate 1000 Rounds") {
+                    game.rounds.size shouldEqual 1000
                 }
-                it("should validate 10 cards for the round 3") {
-                    var cardsToParse = handsList.get(2).replace("\\s".toRegex(), "")
-
-                    val cards = CardParser.stringToListOfCards(cardsToParse)
-                    cards.size shouldEqual 10
+                it("should validate 10 cards for each round") {
+                    game.rounds.all{ round -> round.player1Hand.cards.size == 5  && round.player2Hand.cards.size == 5} shouldEqual true
                 }
             }
         }
