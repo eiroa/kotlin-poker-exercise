@@ -1,6 +1,6 @@
 package com.etermax.kotlin.poker
 
-import com.etermax.kotlin.poker.rest.representation.GameReferee
+import com.etermax.kotlin.poker.domain.GameReferee
 import com.etermax.kotlin.poker.rest.resources.PokerResource
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import io.dropwizard.Application

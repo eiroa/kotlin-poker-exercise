@@ -1,7 +1,7 @@
 package com.etermax.kotlin.poker.test
 
 import com.etermax.kotlin.poker.domain.*
-import com.etermax.kotlin.poker.rest.representation.GameReferee
+import com.etermax.kotlin.poker.domain.GameReferee
 import org.amshove.kluent.shouldEqual
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.describe

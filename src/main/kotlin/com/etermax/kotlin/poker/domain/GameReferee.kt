@@ -1,19 +1,13 @@
-package com.etermax.kotlin.poker.rest.representation
-
-import com.etermax.kotlin.poker.domain.CardParser
-import com.etermax.kotlin.poker.domain.Hand
-import com.etermax.kotlin.poker.domain.Player
-import com.etermax.kotlin.poker.domain.Round
-import com.fasterxml.jackson.annotation.JsonProperty
+package com.etermax.kotlin.poker.domain
 
 
 class GameReferee {
     val inputFile: String
     val fileLines: List<String>
     val rounds: List<Round>
-    @JsonProperty("p1_victories") val p1Victories: Int
-    @JsonProperty("p2_victories") val p2Victories: Int
-    @JsonProperty("winner") val finalWinner: Player
+    val p1Victories: Int
+    val p2Victories: Int
+    val finalWinner: Player
 
     constructor(inputFile: String) {
         this.inputFile = inputFile
