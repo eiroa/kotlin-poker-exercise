@@ -15,11 +15,7 @@ enum class HandResult(val value:Int) {
 
         fun isStraight(cards: List<Card>): Boolean {
             return cards.mapIndexed { index, card ->
-                if (index == 0) {
-                    true
-                } else {
-                    card.value == (cards.get(index - 1).value + 1)
-                }
+                if (index==0) true else card.value == (cards.get(index - 1).value + 1)
             }.all { value -> value == true }
         }
 

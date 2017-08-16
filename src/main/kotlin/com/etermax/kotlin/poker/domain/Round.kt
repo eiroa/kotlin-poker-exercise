@@ -21,8 +21,8 @@ class Round(var player1Hand: Hand, var player2Hand: Hand) {
 
     private fun compareHighestSpareCard(): Player {
         when {
-            player1Hand.getUncombinedCards().maxBy { card -> card.value }!!.value > player2Hand.getUncombinedCards().maxBy { card -> card.value }!!.value -> return player1Hand.player
-            player1Hand.getUncombinedCards().maxBy { card -> card.value }!!.value < player2Hand.getUncombinedCards().maxBy { card -> card.value }!!.value -> return player2Hand.player
+            player1Hand.getMaxUncombinedCard().value > player2Hand.getMaxUncombinedCard().value -> return player1Hand.player
+            player1Hand.getMaxUncombinedCard().value < player2Hand.getMaxUncombinedCard().value -> return player2Hand.player
             else -> return Player.P1 // Tie, player 1 wins by default
         }
     }

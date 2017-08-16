@@ -20,7 +20,7 @@ object CardParser {
     fun stringToListOfCards(values: String): List<Card> {
         when (values) {
             "" -> return emptyList<Card>()
-            else -> return listOf(Card(values.take(1) + values.take(2).drop(1))) + stringToListOfCards(values.drop(2))
+            else -> return listOf(Card(values.take(2))) + stringToListOfCards(values.drop(2))
         }
     }
 

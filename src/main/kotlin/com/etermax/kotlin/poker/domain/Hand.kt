@@ -28,11 +28,9 @@ class Hand {
 
     fun calculateStraightType(cards: List<Card>): Pair<HandResult, List<Card>> {
         when {
-            HandResult.areSameType(cards) && cards.sumBy { card -> card.value } == 60 -> return Pair(HandResult.ROYAL_FLUSH, getCombination
-            (HandResult.ROYAL_FLUSH))
-            HandResult.areSameType(cards) && !(cards.sumBy { card -> card.value } == 60) -> return Pair(HandResult.STRAIGHT_FLUSH, getCombination
-            (HandResult.STRAIGHT_FLUSH))
-            else -> return Pair(HandResult.STRAIGHT, getCombination(HandResult.STRAIGHT))
+            HandResult.areSameType(cards) && cards.sumBy { card -> card.value } == 60 -> return Pair(HandResult.ROYAL_FLUSH, cards)
+            HandResult.areSameType(cards) && !(cards.sumBy { card -> card.value } == 60) -> return Pair(HandResult.STRAIGHT_FLUSH, cards)
+            else -> return Pair(HandResult.STRAIGHT, cards)
         }
     }
 
@@ -49,6 +47,10 @@ class Hand {
 
     fun getUncombinedCards(): List<Card> {
         return cards.minus(getCombination(result.first))
+    }
+
+    fun getMaxUncombinedCard():Card{
+        return getUncombinedCards().maxBy { card -> card.value }!!
     }
 
     fun getUniqueHandCombination(quantity:Int):List<Card>{
