@@ -4,10 +4,10 @@ package com.etermax.kotlin.poker.domain
 class Hand {
     val cards: List<Card>
     val player: Player
-    var result: Pair<HandResult,List<Card>>
+    var result: Pair<HandResult, List<Card>>
 
     constructor(cards: List<Card>, player: Player) {
-        this.cards = cards.sortedBy {  card -> card.value }
+        this.cards = cards.sortedBy { card -> card.value }
         this.player = player
         result = this.calculateResult(this.cards)
     }
@@ -28,31 +28,34 @@ class Hand {
 
     fun calculateStraightType(cards: List<Card>): Pair<HandResult, List<Card>> {
         when {
-            HandResult.areSameType(cards) && cards.sumBy { card -> card.value } == 60 -> return Pair(HandResult.ROYAL_FLUSH, getCombination(HandResult.ROYAL_FLUSH))
-            HandResult.areSameType(cards) && !(cards.sumBy { card -> card.value } == 60) -> return Pair(HandResult.STRAIGHT_FLUSH, getCombination(HandResult.STRAIGHT_FLUSH))
+            HandResult.areSameType(cards) && cards.sumBy { card -> card.value } == 60 -> return Pair(HandResult.ROYAL_FLUSH, getCombination
+            (HandResult.ROYAL_FLUSH))
+            HandResult.areSameType(cards) && !(cards.sumBy { card -> card.value } == 60) -> return Pair(HandResult.STRAIGHT_FLUSH, getCombination
+            (HandResult.STRAIGHT_FLUSH))
             else -> return Pair(HandResult.STRAIGHT, getCombination(HandResult.STRAIGHT))
         }
     }
 
     fun getCombination(handResult: HandResult): List<Card> {
         when (handResult) {
-            HandResult.POKER -> return cards.groupBy { card -> card.value }.entries.filter { set -> set.value.size == 4 }.first().value
-            HandResult.THREE_OF_A_KIND -> return cards.groupBy { card -> card.value }.entries.filter { set -> set.value.size == 3 }.first().value
-            HandResult.TWO_PAIRS -> return cards.groupBy { card -> card.value }.entries.filter { set -> set.value.size == 2 }.flatMap { set -> set.value }
-            HandResult.ONE_PAIR -> return cards.groupBy { card -> card.value }.entries.filter { set -> set.value.size == 2 }.first().value
+            HandResult.POKER -> return getUniqueHandCombination(4)
+            HandResult.THREE_OF_A_KIND -> return getUniqueHandCombination(3)
+            HandResult.TWO_PAIRS -> return getMultipleHandCombination(2)
+            HandResult.ONE_PAIR -> return getUniqueHandCombination(2)
             HandResult.HIGHEST_CARD -> return listOf<Card>(cards.maxBy { card -> card.value }!!)
             else -> return cards
         }
     }
 
-    fun getUncombinedCards(handResult: HandResult):List<Card>{
-        when(handResult){
-            HandResult.POKER -> return cards.groupBy { card -> card.value }.entries.filter { set -> set.value.size == 1 }.first().value
-            HandResult.THREE_OF_A_KIND -> return cards.groupBy { card -> card.value }.entries.filter { set -> set.value.size == 1 }.flatMap{ set -> set.value }
-            HandResult.TWO_PAIRS -> return cards.groupBy { card -> card.value }.entries.filter { set -> set.value.size == 1 }.first().value
-            HandResult.ONE_PAIR -> return cards.groupBy { card -> card.value }.entries.filter { set -> set.value.size == 1 }.flatMap{ set -> set.value }
-            HandResult.HIGHEST_CARD -> return cards.filter { card -> card.value != result.second.first().value }
-            else -> return  emptyList<Card>()
-        }
+    fun getUncombinedCards(): List<Card> {
+        return cards.minus(getCombination(result.first))
+    }
+
+    fun getUniqueHandCombination(quantity:Int):List<Card>{
+        return cards.groupBy { card -> card.value }.entries.filter { set -> set.value.size == quantity }.first().value
+    }
+
+    fun getMultipleHandCombination(quantityOfGroups:Int):List<Card>{
+        return cards.groupBy { card -> card.value }.entries.filter { set -> set.value.size == quantityOfGroups }.flatMap { set -> set.value }
     }
 }

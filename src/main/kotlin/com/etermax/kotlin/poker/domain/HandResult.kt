@@ -1,16 +1,13 @@
 package com.etermax.kotlin.poker.domain
 
 
-enum class HandResult() {
-    ROYAL_FLUSH, STRAIGHT_FLUSH, POKER, FULL, FLUSH, STRAIGHT, THREE_OF_A_KIND, TWO_PAIRS, ONE_PAIR, HIGHEST_CARD;
+enum class HandResult(val value:Int) {
+    ROYAL_FLUSH(10), STRAIGHT_FLUSH(9), POKER(8), FULL(7), FLUSH(6), STRAIGHT(5), THREE_OF_A_KIND(4), TWO_PAIRS(3), ONE_PAIR(2), HIGHEST_CARD(1);
 
     /**
      * All operations should operate with previously ordered cards by value representing a valid Hand
      */
     companion object Representation {
-        val resultValues: HashMap<HandResult,Int> = hashMapOf( ROYAL_FLUSH to 10, STRAIGHT_FLUSH to 9, POKER to 8,FULL to 7,FLUSH to 6,
-                STRAIGHT to 4, THREE_OF_A_KIND to 3,TWO_PAIRS to 2, ONE_PAIR to 1, HIGHEST_CARD to 1)
-
 
         fun areSameType(cards: List<Card>): Boolean {
             return cards.all { card -> card.type.equals(cards.first().type) }
@@ -28,10 +25,6 @@ enum class HandResult() {
 
         fun isRoyalFlush(cards: List<Card>): Boolean {
             return areSameType(cards) && isStraight(cards) && cards.sumBy { card -> card.value } == 60
-        }
-
-        fun getPoints(cards: List<Card>): Int {
-            return cards.sumBy { card -> card.value }
         }
 
         fun equalCombination(cards: List<Card>, possibleValues:Int, maxValue:Int): Boolean {
