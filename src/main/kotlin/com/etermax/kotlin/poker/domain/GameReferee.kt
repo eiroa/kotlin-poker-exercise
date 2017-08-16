@@ -24,5 +24,9 @@ class GameReferee {
         return rounds.filter { round -> round.determineWinner() == player }.size
     }
 
+    //fun getTotalPointsForPlayer(player:Player):Int{
+    //    return rounds.filter { round -> round.player1Hand.player == player }.map { round -> round. }
+    //}
+
 
 }

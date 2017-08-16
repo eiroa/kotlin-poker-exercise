@@ -26,4 +26,5 @@ class Round(var player1Hand: Hand, var player2Hand: Hand) {
             else -> return Player.P1 // Tie, player 1 wins by default
         }
     }
+
 }

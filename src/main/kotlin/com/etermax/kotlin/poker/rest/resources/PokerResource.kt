@@ -3,7 +3,6 @@ package com.etermax.kotlin.poker.rest.resources
 import com.etermax.kotlin.poker.domain.GameReferee
 import com.etermax.kotlin.poker.rest.representation.GameResult
 import com.etermax.kotlin.poker.rest.representation.HandRepresentation
-import com.etermax.kotlin.poker.rest.representation.PlayerRepresentation
 import javax.ws.rs.GET
 import javax.ws.rs.Path
 import javax.ws.rs.Produces
