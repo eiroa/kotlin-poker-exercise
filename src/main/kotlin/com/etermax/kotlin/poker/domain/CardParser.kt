@@ -1,8 +1,6 @@
-package com.etermax.kotlin.poker.rest.representation
+package com.etermax.kotlin.poker.domain
 
-/**
- * Created by eiroa on 8/8/17.
- */
+
 object CardParser {
     fun parseValue(value: String): Int {
         when (value) {
@@ -16,13 +14,13 @@ object CardParser {
     }
 
     fun parseType(value: String): CardType {
-        return CardType.map.get(value)!!
+        return CardType.values.get(value)!!
     }
 
     fun stringToListOfCards(values: String): List<Card> {
         when (values) {
             "" -> return emptyList<Card>()
-            else -> return listOf( Card(values.take(1) + values.take(2).drop(1))) + stringToListOfCards(values.drop(2))
+            else -> return listOf(Card(values.take(2))) + stringToListOfCards(values.drop(2))
         }
     }
 

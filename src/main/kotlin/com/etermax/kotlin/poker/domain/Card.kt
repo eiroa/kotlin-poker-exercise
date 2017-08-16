@@ -1,8 +1,6 @@
-package com.etermax.kotlin.poker.rest.representation
+package com.etermax.kotlin.poker.domain
 
-/**
- * Created by eiroa on 8/8/17.
- */
+
 class Card {
     val representation:String
     var type : CardType
@@ -13,5 +11,7 @@ class Card {
         this.value = CardParser.parseValue(representation.take(1))
         this.type = CardParser.parseType(representation.takeLast(1))
     }
+
+    override fun toString(): String = value.toString() + type
 
 }
