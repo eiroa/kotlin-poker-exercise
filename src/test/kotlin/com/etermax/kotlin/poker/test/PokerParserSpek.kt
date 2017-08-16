@@ -1,6 +1,7 @@
 package com.etermax.kotlin.poker.test
 
 import com.etermax.kotlin.poker.domain.*
+import com.etermax.kotlin.poker.rest.representation.GameReferee
 import org.amshove.kluent.shouldEqual
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.describe
@@ -68,18 +69,6 @@ class PokerParserSpek : Spek({
     }
 
     describe("Validate hand representation") {
-        given(" a text with 1000 rounds for 2 players") {
-            val textFile = "poker.txt"
-            on("parsing file") {
-                val game = GameReferee(textFile)
-                it("should  validate 1000 Rounds") {
-                    game.rounds.size shouldEqual 1000
-                }
-                it("should validate 10 cards for each round") {
-                    game.rounds.all{ round -> round.player1Hand.cards.size == 5  && round.player2Hand.cards.size == 5} shouldEqual true
-                }
-            }
-        }
 
         given(" a text with 2 hand representation where players1 is a royal flush but not players2") {
             val cardsText = "JHTHAHKHQH7SKSKC6H2C"
@@ -257,6 +246,32 @@ class PokerParserSpek : Spek({
                     round.determineWinner() shouldEqual Player.P1
                 }
 
+            }
+        }
+    }
+
+    describe(" validate a full game"){
+        given(" a text with 1000 rounds for 2 players") {
+            val textFile = "poker.txt"
+            on("parsing file") {
+                val game = GameReferee(textFile)
+                it("should  validate 1000 Rounds") {
+                    game.rounds.size shouldEqual 1000
+                }
+                it("should validate 10 cards for each round") {
+                    game.rounds.all{ round -> round.player1Hand.cards.size == 5  && round.player2Hand.cards.size == 5} shouldEqual true
+
+                    println(" P1 victories: "+ game.p1Victories)
+                    println(" P2 victories: "+ game.p2Victories)
+                }
+
+                it("should validate that victories for p1 and p2 equals 1000") {
+                    game.getVictoriesForPlayer(Player.P1) + game.getVictoriesForPlayer(Player.P2) shouldEqual 1000
+                }
+
+                it("should validate that winner is P2") {
+                    game.finalWinner shouldEqual Player.P2
+                }
             }
         }
     }
