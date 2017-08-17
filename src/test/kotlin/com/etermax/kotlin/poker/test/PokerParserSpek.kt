@@ -260,9 +260,6 @@ class PokerParserSpek : Spek({
                 }
                 it("should validate 10 cards for each round") {
                     game.rounds.all{ round -> round.player1Hand.cards.size == 5  && round.player2Hand.cards.size == 5} shouldEqual true
-
-                    println(" P1 victories: "+ game.p1Victories)
-                    println(" P2 victories: "+ game.p2Victories)
                 }
 
                 it("should validate that victories for p1 and p2 equals 1000") {

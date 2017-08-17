@@ -11,7 +11,7 @@ import javax.ws.rs.core.MediaType
 
 @Path("/")
 @Produces(MediaType.APPLICATION_JSON)
-class PokerResource(val game: GameReferee){
+class PokerResource(val game: GameReferee) {
 
     @GET
     @Path("/showHand")
@@ -22,7 +22,15 @@ class PokerResource(val game: GameReferee){
     @GET
     @Path("/result")
     fun showWinner(): GameResult {
-        return GameResult(game.p1Victories,game.p2Victories,game.finalWinner)
+        return GameResult(game.p1Victories,
+                game.p2Victories,
+                game.finalWinner,
+                game.totalPointsP1,
+                game.totalPointsP2,
+                game.totalWinnerPointsP1,
+                game.totalWinnerPoinstP2,
+                game.orderOfAppeareaceOfP1Cads,
+                game.orderOfAppeareaceOfP2Cads)
     }
 
 }

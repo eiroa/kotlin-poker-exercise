@@ -14,4 +14,14 @@ class Card {
 
     override fun toString(): String = value.toString() + type
 
+    fun getValueAsString():String{
+        when(value){
+            11 -> return "Jack of " +type
+            12 -> return "Queen of " + type
+            13 -> return "King of " +type
+            14 -> return "Ace of "+type
+            else -> return value.toString() + " of " + type
+        }
+    }
+
 }

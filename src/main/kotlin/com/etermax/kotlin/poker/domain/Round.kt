@@ -27,4 +27,12 @@ class Round(var player1Hand: Hand, var player2Hand: Hand) {
         }
     }
 
+    fun getHandForPlayer(player:Player):Hand{
+        when(player){
+            Player.P1 -> return player1Hand
+            Player.P2 -> return player2Hand
+            else -> return player1Hand
+        }
+    }
+
 }
